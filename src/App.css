@@ -7,8 +7,8 @@ main .msa-input-label {
 }
 
 main .msa-form-control {
-    margin: 10px;
-    width: 100%;
+    max-width: 500px;
+    margin: 10px auto;
 }
 
 main label + .msa-input {
@@ -89,8 +89,35 @@ main .container-fluid {
 
 .card-columns .card {
     min-width: 300px;
+    max-width: 350px;
 }
 
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header .card-header-title {
+    margin: 0;
+}
+
+.weather-icon .wi {
+    font-size: 65px;
+    color: #924da3;
+}
+
+.card-footer .wi {
+    font-size: 25px;
+}
+
+.text-right-display-inherit div {
+    text-align: right;
+    display: inherit;
+    padding-right: 10px;
+    font-size: 1.2rem;
+}
 .App {
     text-align: center;
 }
