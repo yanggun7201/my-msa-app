@@ -12,7 +12,8 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
         this.state = {
             fetchWeather: this.fetchWeather,
             errorMessage: undefined,
-            weatherData: []
+            weatherData: [],
+            city: ""
         };
     }
 
@@ -24,7 +25,8 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
         const cityName = e.currentTarget.value;
 
         this.setState({
-            errorMessage: undefined
+            errorMessage: undefined,
+            city: ""
         });
 
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`, {

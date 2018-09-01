@@ -4,6 +4,7 @@ export interface IAppContextInterface {
     fetchWeather: any;
     errorMessage?: string;
     weatherData?: any[];
+    city?: string;
 }
 
 export const WeatherContext = React.createContext<IAppContextInterface | null>({

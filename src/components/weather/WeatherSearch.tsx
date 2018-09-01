@@ -2,7 +2,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
-// import AccountCircle from "@material-ui/icons/AccountCircle";
 import Search from "@material-ui/icons/Search";
 import * as React from "react";
 import { WeatherContext } from "../../context/weather-context";
@@ -13,6 +12,8 @@ class WeatherSearch extends React.Component<{}> {
         this.state = {};
     }
     public render() {
+        console.log("WeatherSearch.render()");
+
         return (
             <WeatherContext.Consumer>
                 {context =>
@@ -23,9 +24,13 @@ class WeatherSearch extends React.Component<{}> {
                                     Weather in your city
                                 </InputLabel>
                                 <Input
+                                    key={context.city ? context.city : Math.random()}
                                     className="msa-input"
                                     id="input-with-icon-adornment"
                                     onKeyUp={context.fetchWeather}
+                                    placeholder="Input City"
+                                    defaultValue={context.city}
+                                    autoFocus={true}
                                     startAdornment={
                                         <InputAdornment
                                             position="start"

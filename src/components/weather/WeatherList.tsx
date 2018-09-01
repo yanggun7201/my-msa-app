@@ -26,7 +26,12 @@ class WeatherList extends React.Component<IProps> {
         return (
             <WeatherContext.Consumer>
                 {context =>
-                    context && (!isEmpty(context.weatherData) ? this.renderWeatherItems() : <div>No Weather Data</div>)
+                    context &&
+                    (!isEmpty(context.weatherData) ? (
+                        <div className="card-columns card-deck">{this.renderWeatherItems()}</div>
+                    ) : (
+                        <div>No Weather Data</div>
+                    ))
                 }
             </WeatherContext.Consumer>
         );
