@@ -3,8 +3,9 @@ import { BrowserRouter, Redirect, Route } from "react-router-dom";
 import App from "./App";
 import FirstComponent from "./components/FirstComponent";
 import { Header } from "./components/Header";
-import SecondComponent from "./components/SecondComponent";
 import "./css/styles.css";
+import "./css/weather-icons-wind.min.css";
+import "./css/weather-icons.min.css";
 
 export const AppRouter: React.StatelessComponent<{}> = () => {
     return (
@@ -14,8 +15,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
                 <main>
                     <Route exact={true} path="/" component={App} />
                     <Route path="/FirstComponent" component={FirstComponent} />
-                    <Route path="/SecondComponent" component={SecondComponent} />
-                    <Redirect from="*" to="/" />
+                    <Redirect from="*" to="/FirstComponent" />
                 </main>
             </div>
         </BrowserRouter>
