@@ -13,8 +13,7 @@ class WeatherItem extends React.Component<IProps> {
         this.state = {};
     }
 
-    public renderIcon = () => {
-        const data = this.props.data;
+    public renderIcon = data => {
         const prefix = "wi wi-";
         const code = data.weather[0].id;
         let icon = weacherIcons[code].icon;
@@ -31,10 +30,26 @@ class WeatherItem extends React.Component<IProps> {
         return Number(n) === n && n % 1 !== 0;
     };
 
-    public renderTemporature = () => {
-        const data = this.props.data;
+    public renderTemporature = data => {
         const temporature = data.main.temp - 273.15;
         return temporature.toFixed(0) + " °C";
+    };
+
+    public renderCardBody = data => {
+        return (
+            <div className="row mb-1 mt-1">
+                <div className="col-7 weather-icon">{this.renderIcon(data)}</div>
+                <div className="col-5 text-right-display-inherit">
+                    <div className="row">{this.renderTemporature(data)}</div>
+                    <div className="row">{data.weather[0].main}</div>
+                    <div className="row">
+                        <i>
+                            {data.name},{data.sys.country}
+                        </i>
+                    </div>
+                </div>
+            </div>
+        );
     };
 
     public render() {
@@ -52,20 +67,7 @@ class WeatherItem extends React.Component<IProps> {
                             <div className="card-header">
                                 <h3 className="card-header-title">{data.name}</h3>
                             </div>
-                            <div className="card-body">
-                                <div className="row mb-1 mt-1">
-                                    <div className="col-7 weather-icon">{this.renderIcon()}</div>
-                                    <div className="col-5 text-right-display-inherit">
-                                        <div className="row">{this.renderTemporature()}</div>
-                                        <div className="row">{data.weather[0].main}</div>
-                                        <div className="row">
-                                            <i>
-                                                {data.name},{data.sys.country}
-                                            </i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div className="card-body">{this.renderCardBody(data)}</div>
                             <div className="card-footer">
                                 <div className="row text-center">
                                     <div className="col-4">

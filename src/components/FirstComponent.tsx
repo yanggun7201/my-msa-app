@@ -1,10 +1,9 @@
+import { CircularProgress, Dialog } from "@material-ui/core";
 import * as React from "react";
 import { IAppContextInterface, WeatherContext } from "../context/weather-context";
 import WeatherList from "./weather/WeatherList";
 import WeatherSearch from "./weather/WeatherSearch";
 import WeatherSearchError from "./weather/WeatherSearchError";
-
-const API_KEY = "0b172c5c1180e2908722fcf6dc2b3a03";
 
 export default class FirstComponent extends React.Component<{}, IAppContextInterface> {
     constructor(props: any) {
@@ -29,7 +28,7 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
             city: ""
         });
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`, {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.API_KEY}`, {
             method: "GET"
         }).then((response: any) => {
             response.json().then((data: any) => {
@@ -64,9 +63,30 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
         return e;
     };
 
+    public handleClose = () => {
+        // this.props.onClose(this.props.selectedValue);
+        console.log("handleClose");
+    };
+
     public render() {
         return (
             <div className="container-fluid">
+                <Dialog
+                    open={true}
+                    onClose={this.handleClose}
+                    classes={{
+                        root: "msa-dialog-spinner"
+                    }}
+                >
+                    <CircularProgress
+                        classes={{
+                            root: "bbbb"
+                        }}
+                        thickness={3}
+                        size={90}
+                        color="secondary"
+                    />
+                </Dialog>
                 <WeatherContext.Provider value={this.state}>
                     <WeatherSearchError />
                     <WeatherSearch />
