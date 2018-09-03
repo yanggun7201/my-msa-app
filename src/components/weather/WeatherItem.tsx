@@ -1,4 +1,6 @@
 // import { Card, CardContent } from "@material-ui/core";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import dateformat from "dateformat";
 import * as React from "react";
 import { WeatherContext } from "../../context/weather-context";
 import { weacherIcons } from "./weather-icons";
@@ -61,44 +63,60 @@ class WeatherItem extends React.Component<IProps> {
 
         return (
             <WeatherContext.Consumer>
-                {context =>
-                    context && (
-                        <div className="card border-dark mb-3">
-                            <div className="card-header">
-                                <h3 className="card-header-title">{data.name}</h3>
-                            </div>
-                            <div className="card-body">{this.renderCardBody(data)}</div>
-                            <div className="card-footer">
-                                <div className="row text-center">
-                                    <div className="col-4">
-                                        <i className="wi wi-strong-wind" />
-                                        <br />
-                                        <span>
-                                            {data.wind.speed}
-                                            &nbsp;m/s
-                                        </span>
+                {context => {
+                    const deleteWeather = () => {
+                        if (context) {
+                            context.deleteWeather(data);
+                        }
+                    };
+
+                    return (
+                        context && (
+                            <div className="card border-dark mb-3">
+                                <div className="card-header">
+                                    <h3 className="card-header-title">{data.name}</h3>
+                                    <div className="card-header-right-side">
+                                        <div className="save-button">
+                                            <DeleteForeverIcon onClick={deleteWeather} />
+                                        </div>
+                                        <div className="fetched-time">
+                                            fetched {dateformat(data.fetchedAt, "yyyy-mm-dd HH:MM:ss")}
+                                        </div>
                                     </div>
-                                    <div className="col-4">
-                                        <i className="wi wi-raindrop" />
-                                        <br />
-                                        <span>
-                                            {data.main.humidity}
-                                            &nbsp;%
-                                        </span>
-                                    </div>
-                                    <div className="col-4">
-                                        <i className="wi wi-cloud" />
-                                        <br />
-                                        <span>
-                                            {data.clouds.all}
-                                            &nbsp;%
-                                        </span>
+                                </div>
+                                <div className="card-body">{this.renderCardBody(data)}</div>
+                                <div className="card-footer">
+                                    <div className="row text-center">
+                                        <div className="col-4">
+                                            <i className="wi wi-strong-wind" />
+                                            <br />
+                                            <span>
+                                                {data.wind.speed}
+                                                &nbsp;m/s
+                                            </span>
+                                        </div>
+                                        <div className="col-4">
+                                            <i className="wi wi-raindrop" />
+                                            <br />
+                                            <span>
+                                                {data.main.humidity}
+                                                &nbsp;%
+                                            </span>
+                                        </div>
+                                        <div className="col-4">
+                                            <i className="wi wi-cloud" />
+                                            <br />
+                                            <span>
+                                                {data.clouds.all}
+                                                &nbsp;%
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    )
-                }
+                        )
+                    );
+                }}
             </WeatherContext.Consumer>
         );
     }

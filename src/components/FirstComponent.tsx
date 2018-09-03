@@ -10,6 +10,7 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
         super(props);
         this.state = {
             fetchWeather: this.fetchWeather,
+            deleteWeather: this.deleteWeather,
             errorMessage: undefined,
             weatherData: [],
             city: "",
@@ -30,6 +31,25 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
             });
         }
         return false;
+    };
+
+    public deleteWeather = data => {
+        if (this.state.weatherData) {
+            const index = this.state.weatherData.findIndex((weather: any) => {
+                if (weather.name === data.name) {
+                    return true;
+                }
+                return false;
+            });
+
+            const newWeatherData = [
+                ...this.state.weatherData.slice(0, index),
+                ...this.state.weatherData.slice(index + 1)
+            ];
+            this.setState({
+                weatherData: newWeatherData
+            });
+        }
     };
 
     public fetchWeather = (e: React.KeyboardEvent<HTMLInputElement>): React.KeyboardEvent<HTMLInputElement> => {
@@ -79,6 +99,7 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
                 console.log("구름  : " + data.clouds.all + "%");
 
                 const weatherData = this.state.weatherData || [];
+                data.fetchedAt = new Date();
                 weatherData.push(data);
                 this.setState({
                     weatherData,

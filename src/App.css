@@ -175,10 +175,32 @@ body {
     margin-bottom: 0;
     background-color: rgba(0, 0, 0, 0.03);
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    height: 58px;
+}
+
+.card-header .card-header-right-side {
+    float: right;
+}
+
+.card-header .card-header-right-side .save-button {
+    position: relative;
+    font-size: 0.5rem;
+    text-align: right;
+    color: #924da3;
+}
+.save-button svg {
+    cursor: pointer;
+}
+
+.card-header .card-header-right-side .fetched-time {
+    position: relative;
+    font-size: 0.5rem;
+    text-align: right;
 }
 
 .card-header .card-header-title {
     margin: 0;
+    float: left;
 }
 
 .weather-icon .wi {
