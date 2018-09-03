@@ -36,9 +36,10 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
             response.json().then((data: any) => {
                 console.log(data);
 
-                if (data.cod === "404") {
+                if (data.cod !== 200) {
                     this.setState({
-                        errorMessage: data.message
+                        errorMessage: `[${cityName}] ${data.message}`,
+                        fetching: false
                     });
                     return;
                 }

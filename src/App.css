@@ -6,11 +6,6 @@ main .msa-input-label {
     font-size: 2rem;
 }
 
-main .msa-form-control {
-    max-width: 500px;
-    margin: 10px auto;
-}
-
 main label + .msa-input {
     margin-top: 3rem;
 }
@@ -37,10 +32,24 @@ html {
     overflow-x: hidden;
 }
 
+body {
+    overflow-y: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+#root {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 @media (min-width: 360px) {
     .card-columns .card {
         min-width: 300px;
         max-width: 100%;
+    }
+    main .msa-form-control {
+        width: 100%;
+        margin: 10px auto;
     }
 }
 
@@ -59,6 +68,10 @@ html {
     .card-columns .card {
         min-width: 300px;
         max-width: 95%;
+    }
+    main .msa-form-control {
+        width: 100%;
+        margin: 10px auto;
     }
 }
 
@@ -79,6 +92,11 @@ html {
         min-width: 300px;
         max-width: 350px;
     }
+
+    main .msa-form-control {
+        width: 500px;
+        margin: 10px auto;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -98,6 +116,11 @@ html {
         min-width: 300px;
         max-width: 350px;
     }
+
+    main .msa-form-control {
+        width: 500px;
+        margin: 10px auto;
+    }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
@@ -116,6 +139,11 @@ html {
     .card-columns .card {
         min-width: 300px;
         max-width: 350px;
+    }
+
+    main .msa-form-control {
+        width: 500px;
+        margin: 10px auto;
     }
 }
 
