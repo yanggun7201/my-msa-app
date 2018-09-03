@@ -32,6 +32,18 @@ main .container-fluid {
     margin-top: 15px;
 }
 
+html {
+    overscroll-behavior: none;
+    overflow-x: hidden;
+}
+
+@media (min-width: 360px) {
+    .card-columns .card {
+        min-width: 300px;
+        max-width: 100%;
+    }
+}
+
 @media (min-width: 576px) {
     .card-columns {
         -webkit-column-count: 2;
@@ -42,6 +54,11 @@ main .container-fluid {
         column-gap: 1.25rem;
         orphans: 1;
         widows: 1;
+    }
+
+    .card-columns .card {
+        min-width: 300px;
+        max-width: 95%;
     }
 }
 
@@ -57,6 +74,11 @@ main .container-fluid {
         orphans: 1;
         widows: 1;
     }
+
+    .card-columns .card {
+        min-width: 300px;
+        max-width: 350px;
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -70,6 +92,11 @@ main .container-fluid {
         column-gap: 1.25rem;
         orphans: 1;
         widows: 1;
+    }
+
+    .card-columns .card {
+        min-width: 300px;
+        max-width: 350px;
     }
 }
 
@@ -85,11 +112,11 @@ main .container-fluid {
         orphans: 1;
         widows: 1;
     }
-}
 
-.card-columns .card {
-    min-width: 300px;
-    max-width: 350px;
+    .card-columns .card {
+        min-width: 300px;
+        max-width: 350px;
+    }
 }
 
 .card-header {
@@ -120,7 +147,7 @@ main .container-fluid {
 }
 
 .msa-dialog-spinner > div:nth-child(1) {
-    opacity: 0.7 !important;
+    opacity: 0 !important;
 }
 .msa-dialog-spinner > div:nth-child(2) {
     background-color: transparent;

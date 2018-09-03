@@ -12,7 +12,8 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
             fetchWeather: this.fetchWeather,
             errorMessage: undefined,
             weatherData: [],
-            city: ""
+            city: "",
+            fetching: false
         };
     }
 
@@ -25,10 +26,11 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
 
         this.setState({
             errorMessage: undefined,
-            city: ""
+            city: "",
+            fetching: true
         });
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.API_KEY}`, {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.REACT_APP_API_KEY}`, {
             method: "GET"
         }).then((response: any) => {
             response.json().then((data: any) => {
@@ -53,7 +55,10 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
 
                 const weatherData = this.state.weatherData || [];
                 weatherData.push(data);
-                this.setState({ weatherData });
+                this.setState({
+                    weatherData,
+                    fetching: false
+                });
             });
 
             return response;
@@ -68,25 +73,31 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
         console.log("handleClose");
     };
 
+    public renderSpinner = () => {
+        return (
+            <Dialog
+                open={true}
+                onClose={this.handleClose}
+                classes={{
+                    root: "msa-dialog-spinner"
+                }}
+            >
+                <CircularProgress
+                    classes={{
+                        root: "bbbb"
+                    }}
+                    thickness={3}
+                    size={90}
+                    color="secondary"
+                />
+            </Dialog>
+        );
+    };
+
     public render() {
         return (
             <div className="container-fluid">
-                <Dialog
-                    open={true}
-                    onClose={this.handleClose}
-                    classes={{
-                        root: "msa-dialog-spinner"
-                    }}
-                >
-                    <CircularProgress
-                        classes={{
-                            root: "bbbb"
-                        }}
-                        thickness={3}
-                        size={90}
-                        color="secondary"
-                    />
-                </Dialog>
+                {this.state.fetching && this.renderSpinner()}
                 <WeatherContext.Provider value={this.state}>
                     <WeatherSearchError />
                     <WeatherSearch />
