@@ -17,12 +17,36 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
         };
     }
 
+    public existsWeather = (cityName = "") => {
+        if (this.state.weatherData) {
+            return this.state.weatherData.some((weather: any) => {
+                console.log("weather.name.toLowerCase()", weather.name.toLowerCase());
+                console.log("cityName.toLowerCase()", cityName.toLowerCase());
+
+                if (weather.name.toLowerCase() === cityName.toLowerCase()) {
+                    return true;
+                }
+                return false;
+            });
+        }
+        return false;
+    };
+
     public fetchWeather = (e: React.KeyboardEvent<HTMLInputElement>): React.KeyboardEvent<HTMLInputElement> => {
         if (e.keyCode !== 13) {
             return e;
         }
 
         const cityName = e.currentTarget.value;
+
+        if (this.existsWeather(cityName)) {
+            this.setState({
+                errorMessage: `${cityName} is already in the weather list`,
+                city: cityName,
+                fetching: false
+            });
+            return e;
+        }
 
         this.setState({
             errorMessage: undefined,
