@@ -212,6 +212,14 @@ body {
     font-size: 25px;
 }
 
+.card {
+    text-align: center;
+}
+
+.card .card-reload {
+    margin: 22%;
+}
+
 .text-right-display-inherit div {
     text-align: right;
     display: inherit;
@@ -220,7 +228,7 @@ body {
 }
 
 .msa-dialog-spinner > div:nth-child(1) {
-    opacity: 0 !important;
+    opacity: 0.5 !important;
 }
 .msa-dialog-spinner > div:nth-child(2) {
     background-color: transparent;

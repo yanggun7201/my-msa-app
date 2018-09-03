@@ -1,6 +1,7 @@
 import { CircularProgress, Dialog } from "@material-ui/core";
 import * as React from "react";
 import { IAppContextInterface, WeatherContext } from "../context/weather-context";
+import { loadWeather, saveWeather } from "../utils/storage";
 import WeatherList from "./weather/WeatherList";
 import WeatherSearch from "./weather/WeatherSearch";
 import WeatherSearchError from "./weather/WeatherSearchError";
@@ -11,12 +12,19 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
         this.state = {
             fetchWeather: this.fetchWeather,
             deleteWeather: this.deleteWeather,
+            reloadWeather: this.reloadWeather,
             errorMessage: undefined,
-            weatherData: [],
+            weatherData: loadWeather(),
             city: "",
-            fetching: false
+            fetching: true
         };
     }
+
+    public componentDidMount = () => {
+        this.setState({
+            fetching: false
+        });
+    };
 
     public existsWeather = (cityName = "") => {
         if (this.state.weatherData) {
@@ -33,23 +41,73 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
         return false;
     };
 
-    public deleteWeather = data => {
+    public findIndex = cityName => {
         if (this.state.weatherData) {
-            const index = this.state.weatherData.findIndex((weather: any) => {
-                if (weather.name === data.name) {
+            return this.state.weatherData.findIndex((weather: any) => {
+                if (weather.name === cityName) {
                     return true;
                 }
                 return false;
             });
+        }
+        return -1;
+    };
+
+    public deleteWeather = data => {
+        if (this.state.weatherData) {
+            const index = this.findIndex(data.name);
 
             const newWeatherData = [
                 ...this.state.weatherData.slice(0, index),
                 ...this.state.weatherData.slice(index + 1)
             ];
+
             this.setState({
                 weatherData: newWeatherData
             });
+
+            saveWeather(newWeatherData);
         }
+    };
+
+    public callWeatherAPI = (cityName: string, callback: (data: any) => void) => {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.REACT_APP_API_KEY}`, {
+            method: "GET"
+        }).then((response: any) => {
+            response.json().then((data: any) => {
+                console.log(data);
+                if (data.cod !== 200) {
+                    this.setState({
+                        errorMessage: `[${cityName}] ${data.message}`,
+                        fetching: false
+                    });
+                    return;
+                }
+
+                callback(data);
+            });
+
+            return response;
+        });
+    };
+
+    public reloadWeather = oldData => {
+        const cityName = oldData.name;
+
+        this.callWeatherAPI(cityName, (data: any) => {
+            const weatherData = this.state.weatherData || [];
+            data.fetchedAt = new Date();
+            const index = this.findIndex(data.name);
+
+            const newWeatherData = [...weatherData.slice(0, index), data, ...weatherData.slice(index + 1)];
+
+            this.setState({
+                weatherData: newWeatherData,
+                fetching: false
+            });
+
+            saveWeather(newWeatherData);
+        });
     };
 
     public fetchWeather = (e: React.KeyboardEvent<HTMLInputElement>): React.KeyboardEvent<HTMLInputElement> => {
@@ -74,40 +132,26 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
             fetching: true
         });
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.REACT_APP_API_KEY}`, {
-            method: "GET"
-        }).then((response: any) => {
-            response.json().then((data: any) => {
-                console.log(data);
+        this.callWeatherAPI(cityName, (data: any) => {
+            // console.log("현재온도 : " + (data.main.temp - 273.15));
+            // console.log("현재습도 : " + data.main.humidity);
+            // console.log("날씨 : " + data.weather[0].main);
+            // console.log("상세날씨설명 : " + data.weather[0].description);
+            // console.log("날씨 이미지 : " + data.weather[0].icon);
+            // console.log("바람   : " + data.wind.speed);
+            // console.log("나라   : " + data.sys.country);
+            // console.log("도시이름  : " + data.name);
+            // console.log("구름  : " + data.clouds.all + "%");
 
-                if (data.cod !== 200) {
-                    this.setState({
-                        errorMessage: `[${cityName}] ${data.message}`,
-                        fetching: false
-                    });
-                    return;
-                }
-
-                console.log("현재온도 : " + (data.main.temp - 273.15));
-                console.log("현재습도 : " + data.main.humidity);
-                console.log("날씨 : " + data.weather[0].main);
-                console.log("상세날씨설명 : " + data.weather[0].description);
-                console.log("날씨 이미지 : " + data.weather[0].icon);
-                console.log("바람   : " + data.wind.speed);
-                console.log("나라   : " + data.sys.country);
-                console.log("도시이름  : " + data.name);
-                console.log("구름  : " + data.clouds.all + "%");
-
-                const weatherData = this.state.weatherData || [];
-                data.fetchedAt = new Date();
-                weatherData.push(data);
-                this.setState({
-                    weatherData,
-                    fetching: false
-                });
+            const newWeatherData = this.state.weatherData || [];
+            data.fetchedAt = new Date();
+            newWeatherData.push(data);
+            this.setState({
+                weatherData: newWeatherData,
+                fetching: false
             });
 
-            return response;
+            saveWeather(newWeatherData);
         });
 
         console.log(e.currentTarget.value);

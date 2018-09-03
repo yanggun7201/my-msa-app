@@ -19,7 +19,7 @@ class WeatherList extends React.Component<IProps> {
         }
 
         return this.props.data.map((item, index) => {
-            return <WeatherItem key={index} data={item} />;
+            return <WeatherItem key={item.fetchedAt} data={item} />;
         });
     };
     public render() {

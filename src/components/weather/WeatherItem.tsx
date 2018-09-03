@@ -1,5 +1,6 @@
-// import { Card, CardContent } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import RotateRightIcon from "@material-ui/icons/RotateRight";
 import dateformat from "dateformat";
 import * as React from "react";
 import { WeatherContext } from "../../context/weather-context";
@@ -8,12 +9,29 @@ import { weacherIcons } from "./weather-icons";
 interface IProps {
     data: any;
 }
+interface IState {
+    fetching: boolean;
+}
 
-class WeatherItem extends React.Component<IProps> {
+class WeatherItem extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            fetching: false
+        };
     }
+
+    public componentWillReceiveProps = newProps => {
+        console.log("componentWillReceiveProps", newProps);
+
+        if (this.props.data) {
+            if (this.props.data.fetchedAt !== newProps.fetchedAt) {
+                this.setState({
+                    fetching: false
+                });
+            }
+        }
+    };
 
     public renderIcon = data => {
         const prefix = "wi wi-";
@@ -60,6 +78,7 @@ class WeatherItem extends React.Component<IProps> {
         }
 
         const data = this.props.data;
+        const fetching = this.state.fetching;
 
         return (
             <WeatherContext.Consumer>
@@ -69,50 +88,72 @@ class WeatherItem extends React.Component<IProps> {
                             context.deleteWeather(data);
                         }
                     };
+                    const reloadWeather = () => {
+                        if (context) {
+                            this.setState({
+                                fetching: true
+                            });
+                            context.reloadWeather(data);
+                        }
+                    };
 
                     return (
                         context && (
                             <div className="card border-dark mb-3">
-                                <div className="card-header">
-                                    <h3 className="card-header-title">{data.name}</h3>
-                                    <div className="card-header-right-side">
-                                        <div className="save-button">
-                                            <DeleteForeverIcon onClick={deleteWeather} />
+                                {fetching ? (
+                                    <CircularProgress
+                                        classes={{
+                                            root: "card-reload"
+                                        }}
+                                        thickness={3}
+                                        size={90}
+                                        color="secondary"
+                                    />
+                                ) : (
+                                    <React.Fragment>
+                                        <div className="card-header">
+                                            <h3 className="card-header-title">{data.name}</h3>
+                                            <div className="card-header-right-side">
+                                                <div className="save-button">
+                                                    <RotateRightIcon onClick={reloadWeather} />
+                                                    <DeleteForeverIcon onClick={deleteWeather} />
+                                                </div>
+                                                <div className="fetched-time">
+                                                    fetched {dateformat(data.fetchedAt, "yyyy-mm-dd HH:MM:ss")}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="fetched-time">
-                                            fetched {dateformat(data.fetchedAt, "yyyy-mm-dd HH:MM:ss")}
+                                        <div className="card-body">{this.renderCardBody(data)}</div>
+                                        <div className="card-footer">
+                                            <div className="row text-center">
+                                                <div className="col-4">
+                                                    <i className="wi wi-strong-wind" />
+                                                    <br />
+                                                    <span>
+                                                        {data.wind.speed}
+                                                        &nbsp;m/s
+                                                    </span>
+                                                </div>
+                                                <div className="col-4">
+                                                    <i className="wi wi-raindrop" />
+                                                    <br />
+                                                    <span>
+                                                        {data.main.humidity}
+                                                        &nbsp;%
+                                                    </span>
+                                                </div>
+                                                <div className="col-4">
+                                                    <i className="wi wi-cloud" />
+                                                    <br />
+                                                    <span>
+                                                        {data.clouds.all}
+                                                        &nbsp;%
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="card-body">{this.renderCardBody(data)}</div>
-                                <div className="card-footer">
-                                    <div className="row text-center">
-                                        <div className="col-4">
-                                            <i className="wi wi-strong-wind" />
-                                            <br />
-                                            <span>
-                                                {data.wind.speed}
-                                                &nbsp;m/s
-                                            </span>
-                                        </div>
-                                        <div className="col-4">
-                                            <i className="wi wi-raindrop" />
-                                            <br />
-                                            <span>
-                                                {data.main.humidity}
-                                                &nbsp;%
-                                            </span>
-                                        </div>
-                                        <div className="col-4">
-                                            <i className="wi wi-cloud" />
-                                            <br />
-                                            <span>
-                                                {data.clouds.all}
-                                                &nbsp;%
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                    </React.Fragment>
+                                )}
                             </div>
                         )
                     );
