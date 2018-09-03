@@ -1,22 +1,9 @@
-main {
-    /* font-size: 32px !important; */
-}
-
-main .msa-input-label {
-    font-size: 2rem;
-}
-
 main label + .msa-input {
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
 main .msa-input-adornment {
     font-size: 3rem;
-}
-
-main .msa-input-adornment-search {
-    width: 3rem;
-    height: 3rem;
 }
 
 main .container-fluid {
@@ -42,11 +29,30 @@ header.msa-header {
     background-color: #924da3 !important;
 }
 
-@media (max-width: 420px) {
-    .save-button svg {
-        margin-left: 20px;
+@media (max-width: 360px) {
+    .card-columns .card {
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+    main .msa-form-control {
+        width: 100%;
+        margin: 10px auto;
+    }
+
+    #input-with-icon-adornment {
+        font-size: 2.5rem;
+    }
+
+    main .msa-input-adornment-search {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    main .msa-input-label {
+        font-size: 1.5rem;
     }
 }
+
 @media (min-width: 360px) {
     .card-columns .card {
         min-width: 100% !important;
@@ -59,6 +65,15 @@ header.msa-header {
 
     #input-with-icon-adornment {
         font-size: 2.5rem;
+    }
+
+    main .msa-input-adornment-search {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    main .msa-input-label {
+        font-size: 1.5rem;
     }
 }
 
@@ -85,6 +100,15 @@ header.msa-header {
 
     #input-with-icon-adornment {
         font-size: 3rem;
+    }
+
+    main .msa-input-adornment-search {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    main .msa-input-label {
+        font-size: 2rem;
     }
 }
 
@@ -207,6 +231,9 @@ header.msa-header {
     width: 2rem;
     height: 2rem;
 }
+.save-button.is-mobile svg {
+    margin-left: 20px;
+}
 
 .card-header .card-header-right-side .fetched-time {
     position: relative;
@@ -230,10 +257,12 @@ header.msa-header {
 
 .card {
     text-align: center;
+    height: 268px;
+    min-width: 328px;
 }
 
 .card .card-reload {
-    margin: 22%;
+    margin: 10vh auto;
 }
 
 .text-right-display-inherit div {
@@ -246,43 +275,11 @@ header.msa-header {
 .msa-dialog-spinner > div:nth-child(1) {
     opacity: 0.5 !important;
 }
+
 .msa-dialog-spinner > div:nth-child(2) {
     background-color: transparent;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
     overflow: hidden;
-}
-
-.App {
-    text-align: center;
-}
-
-.App-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 80px;
-}
-
-.App-header {
-    background-color: #222;
-    height: 150px;
-    padding: 20px;
-    color: white;
-}
-
-.App-title {
-    font-size: 1em;
-}
-
-.App-intro {
-    font-size: large;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
 }

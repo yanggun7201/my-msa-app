@@ -1,9 +1,11 @@
 import { CircularProgress } from "@material-ui/core";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import RotateRightIcon from "@material-ui/icons/RotateRight";
+import classnames from "classnames";
 import dateformat from "dateformat";
 import * as React from "react";
 import { WeatherContext } from "../../context/weather-context";
+import { isMobile } from "../../utils/utils";
 import { weacherIcons } from "./weather-icons";
 
 interface IProps {
@@ -114,7 +116,7 @@ class WeatherItem extends React.Component<IProps, IState> {
                                         <div className="card-header">
                                             <h3 className="card-header-title">{data.name}</h3>
                                             <div className="card-header-right-side">
-                                                <div className="save-button">
+                                                <div className={classnames("save-button", { "is-mobile": isMobile() })}>
                                                     <RotateRightIcon onClick={reloadWeather} />
                                                     <DeleteForeverIcon onClick={deleteWeather} />
                                                 </div>

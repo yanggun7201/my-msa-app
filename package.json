@@ -9,6 +9,7 @@
         "@types/react-dropzone": "^4.2.2",
         "@types/react-router-bootstrap": "^0.24.5",
         "@types/react-router-dom": "^4.3.0",
+        "classnames": "^2.2.6",
         "cross-env": "^5.2.0",
         "dateformat": "^3.0.3",
         "lodash": "^4.17.10",
