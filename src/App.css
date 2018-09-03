@@ -42,6 +42,11 @@ header.msa-header {
     background-color: #924da3 !important;
 }
 
+@media (max-width: 420px) {
+    .save-button svg {
+        margin-left: 20px;
+    }
+}
 @media (min-width: 360px) {
     .card-columns .card {
         min-width: 100% !important;
@@ -196,8 +201,11 @@ header.msa-header {
     text-align: right;
     color: #924da3;
 }
+
 .save-button svg {
     cursor: pointer;
+    width: 2rem;
+    height: 2rem;
 }
 
 .card-header .card-header-right-side .fetched-time {
@@ -243,6 +251,7 @@ header.msa-header {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+    overflow: hidden;
 }
 
 .App {

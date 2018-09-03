@@ -5,6 +5,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Search from "@material-ui/icons/Search";
 import * as React from "react";
 import { WeatherContext } from "../../context/weather-context";
+import { isMobile } from "../../utils/utils";
 
 class WeatherSearch extends React.Component<{}> {
     constructor(props) {
@@ -30,7 +31,7 @@ class WeatherSearch extends React.Component<{}> {
                                     onKeyUp={context.fetchWeather}
                                     placeholder="Input City"
                                     defaultValue={context.city}
-                                    autoFocus={true}
+                                    autoFocus={!isMobile()}
                                     startAdornment={
                                         <InputAdornment
                                             position="start"

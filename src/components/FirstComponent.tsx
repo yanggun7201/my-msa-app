@@ -1,7 +1,7 @@
 import { CircularProgress, Dialog } from "@material-ui/core";
 import * as React from "react";
 import { IAppContextInterface, WeatherContext } from "../context/weather-context";
-import { loadWeather, saveWeather } from "../utils/storage";
+import { loadWeather, saveWeather } from "../utils/utils";
 import WeatherList from "./weather/WeatherList";
 import WeatherSearch from "./weather/WeatherSearch";
 import WeatherSearchError from "./weather/WeatherSearchError";
@@ -143,9 +143,10 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
             // console.log("도시이름  : " + data.name);
             // console.log("구름  : " + data.clouds.all + "%");
 
-            const newWeatherData = this.state.weatherData || [];
+            const weatherData = this.state.weatherData || [];
             data.fetchedAt = new Date();
-            newWeatherData.push(data);
+
+            const newWeatherData = [data, ...weatherData];
             this.setState({
                 weatherData: newWeatherData,
                 fetching: false
