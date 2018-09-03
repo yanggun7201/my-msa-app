@@ -23,16 +23,15 @@ export const Header: React.StatelessComponent<{}> = () => {
         //     </Nav>
         // </Navbar>
 
-        <AppBar position="static">
+        <AppBar position="static" className="msa-header">
             <Toolbar>
                 <IconButton aria-label="Menu" color="inherit">
                     <MenuIcon aria-haspopup="true" />
                 </IconButton>
                 <Typography variant="display2" color="inherit">
-                    <Link style={{ color: "white" }} to="/">
-                        S1
+                    <Link style={{ color: "white", fontSize: "2rem" }} to="/">
+                        Weather
                     </Link>
-                    <Link to="/FirstComponent"> Weather </Link>
                 </Typography>
             </Toolbar>
         </AppBar>

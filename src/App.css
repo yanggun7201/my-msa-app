@@ -19,10 +19,6 @@ main .msa-input-adornment-search {
     height: 3rem;
 }
 
-#input-with-icon-adornment {
-    font-size: 3rem;
-}
-
 main .container-fluid {
     margin-top: 15px;
 }
@@ -42,6 +38,10 @@ body {
     overflow-x: hidden;
 }
 
+header.msa-header {
+    background-color: #924da3 !important;
+}
+
 @media (min-width: 360px) {
     .card-columns .card {
         min-width: 100% !important;
@@ -50,6 +50,10 @@ body {
     main .msa-form-control {
         width: 100%;
         margin: 10px auto;
+    }
+
+    #input-with-icon-adornment {
+        font-size: 2.5rem;
     }
 }
 
@@ -72,6 +76,10 @@ body {
     main .msa-form-control {
         width: 100%;
         margin: 10px auto;
+    }
+
+    #input-with-icon-adornment {
+        font-size: 3rem;
     }
 }
 
