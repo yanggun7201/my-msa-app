@@ -13,8 +13,6 @@ class WeatherSearch extends React.Component<{}> {
         this.state = {};
     }
     public render() {
-        console.log("WeatherSearch.render()");
-
         return (
             <WeatherContext.Consumer>
                 {context =>

@@ -3,10 +3,6 @@ import { Alert } from "react-bootstrap";
 import { WeatherContext } from "../../context/weather-context";
 
 class WeatherSearchError extends React.Component<{}> {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
     public render() {
         return (
             <WeatherContext.Consumer>
@@ -17,7 +13,7 @@ class WeatherSearchError extends React.Component<{}> {
                             <strong>{context.errorMessage}</strong>
                         </Alert>
                     ) : (
-                        <span />
+                        <React.Fragment />
                     ))
                 }
             </WeatherContext.Consumer>
