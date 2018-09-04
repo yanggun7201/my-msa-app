@@ -6,8 +6,10 @@ export interface IAppContextInterface {
     city?: string;
     fetching?: boolean;
     fetchWeather: any;
-    deleteWeather: any;
-    reloadWeather: any;
+    deleteWeather: (data: any) => void;
+    reloadWeather: (cityName: string) => void;
+    registerWeatherForReload: (cityName: string, timeoutFunc: () => any) => void;
+    weatherTimeouts: [];
 }
 
 export const WeatherContext = React.createContext<IAppContextInterface | null>({
@@ -17,7 +19,11 @@ export const WeatherContext = React.createContext<IAppContextInterface | null>({
     deleteWeather: data => {
         console.log("context default");
     },
-    reloadWeather: data => {
+    reloadWeather: (cityName: string) => {
         console.log("context default");
-    }
+    },
+    registerWeatherForReload: (cityName: string, timeoutFunc: () => any) => {
+        console.log("context default");
+    },
+    weatherTimeouts: []
 });

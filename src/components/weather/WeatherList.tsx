@@ -1,8 +1,10 @@
 import isEmpty from "lodash/isEmpty";
 import * as React from "react";
 import { WeatherContext } from "../../context/weather-context";
+import withConsumer from "../../context/withConsumer";
 import WeatherItem from "./WeatherItem";
 
+const WithConsumerWeatherItem = withConsumer(WeatherItem);
 interface IProps {
     data: any[] | undefined;
 }
@@ -19,7 +21,7 @@ class WeatherList extends React.Component<IProps> {
         }
 
         return this.props.data.map((item, index) => {
-            return <WeatherItem key={item.fetchedAt} data={item} />;
+            return <WithConsumerWeatherItem key={item.fetchedAt.toString()} data={item} />;
         });
     };
     public render() {

@@ -13,10 +13,12 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
             fetchWeather: this.fetchWeather,
             deleteWeather: this.deleteWeather,
             reloadWeather: this.reloadWeather,
+            registerWeatherForReload: this.registerWeatherForReload,
             errorMessage: undefined,
             weatherData: loadWeather(),
             city: "",
-            fetching: true
+            fetching: true,
+            weatherTimeouts: []
         };
     }
 
@@ -24,6 +26,16 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
         this.setState({
             fetching: false
         });
+    };
+
+    public registerWeatherForReload = (cityName: string, timeoutFunc: () => any) => {
+        console.log("registerWeatherForReload", cityName);
+
+        const weatherTimeouts = this.state.weatherTimeouts;
+        if (weatherTimeouts[cityName]) {
+            clearTimeout(weatherTimeouts[cityName]);
+        }
+        weatherTimeouts[cityName] = timeoutFunc;
     };
 
     public existsWeather = (cityName = "") => {
@@ -91,9 +103,7 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
         });
     };
 
-    public reloadWeather = oldData => {
-        const cityName = oldData.name;
-
+    public reloadWeather = (cityName: string) => {
         this.callWeatherAPI(cityName, (data: any) => {
             const weatherData = this.state.weatherData || [];
             data.fetchedAt = new Date();
