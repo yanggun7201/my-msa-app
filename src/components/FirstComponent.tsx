@@ -54,15 +54,23 @@ export default class FirstComponent extends React.Component<{}, IAppContextInter
     };
 
     public findIndex = cityName => {
-        if (this.state.weatherData) {
-            return this.state.weatherData.findIndex((weather: any) => {
-                if (weather.name === cityName) {
-                    return true;
-                }
-                return false;
-            });
+        // change findIndex to some for Android
+        const { weatherData } = this.state;
+        if (!weatherData) {
+            return -1;
         }
-        return -1;
+
+        let returnIndex = -1;
+        const foundWeather = weatherData.some((weather, index) => {
+            returnIndex = index;
+            return weather.name === cityName;
+        });
+
+        if (!foundWeather) {
+            return -1;
+        }
+
+        return returnIndex;
     };
 
     public deleteWeather = data => {
