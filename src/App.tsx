@@ -1,112 +1,222 @@
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { CircularProgress, Dialog } from "@material-ui/core";
 import * as React from "react";
-import Dropzone from "react-dropzone";
-import "./App.css";
-import { ThemeContext, themes } from "./theme-context";
+import WeatherList from "./components/weather/WeatherList";
+import WeatherSearch from "./components/weather/WeatherSearch";
+import WeatherSearchError from "./components/weather/WeatherSearchError";
+import { IAppContextInterface, WeatherContext } from "./context/weather-context";
+import withConsumer from "./context/withConsumer";
+import { loadWeather, saveWeather } from "./utils/utils";
 
-interface IState {
-    imageFiles: any[];
-    results: any;
-    dropzone: any;
-    theme: any;
-    toggleTheme: any;
-}
+const WithConsumerWeatherList = withConsumer(WeatherList);
+const WithConsumerWeatherSearch = withConsumer(WeatherSearch);
+const WithConsumerWeatherSearchError = withConsumer(WeatherSearchError);
 
-export default class App extends React.Component<{}, IState> {
+export default class App extends React.Component<{}, IAppContextInterface> {
     constructor(props: any) {
         super(props);
         this.state = {
-            imageFiles: [],
-            results: "",
-            dropzone: this.onDrop.bind(this),
-
-            theme: themes.dark,
-            toggleTheme: this.toggleTheme()
+            fetchWeather: this.fetchWeather,
+            deleteWeather: this.deleteWeather,
+            reloadWeather: this.reloadWeather,
+            registerWeatherForReload: this.registerWeatherForReload,
+            errorMessage: undefined,
+            weatherData: loadWeather(),
+            city: "",
+            fetching: true,
+            weatherTimeouts: []
         };
     }
 
-    public toggleTheme = () => {
-        this.setState(state => ({
-            theme: state.theme === themes.light ? themes.dark : themes.light
-        }));
+    public componentDidMount = () => {
+        this.setState({
+            fetching: false
+        });
     };
 
-    public onDrop(files: any) {
-        this.setState({
-            imageFiles: files,
-            results: ""
+    public registerWeatherForReload = (cityName: string, timeoutFunc: () => any) => {
+        console.log("registerWeatherForReload", cityName);
+
+        const weatherTimeouts = this.state.weatherTimeouts;
+        if (weatherTimeouts[cityName]) {
+            clearTimeout(weatherTimeouts[cityName]);
+        }
+        weatherTimeouts[cityName] = timeoutFunc;
+    };
+
+    public existsWeather = (cityName = "") => {
+        if (this.state.weatherData) {
+            return this.state.weatherData.some((weather: any) => {
+                console.log("weather.name.toLowerCase()", weather.name.toLowerCase());
+                console.log("cityName.toLowerCase()", cityName.toLowerCase());
+
+                if (weather.name.toLowerCase() === cityName.toLowerCase()) {
+                    return true;
+                }
+                return false;
+            });
+        }
+        return false;
+    };
+
+    public findIndex = cityName => {
+        // change findIndex to some for Android
+        const { weatherData } = this.state;
+        if (!weatherData) {
+            return -1;
+        }
+
+        let returnIndex = -1;
+        const foundWeather = weatherData.some((weather, index) => {
+            returnIndex = index;
+            return weather.name === cityName;
         });
 
-        const file = files[0];
-        const reader: FileReader = new FileReader();
-        reader.onload = readerEvt => {
-            const binaryString: any = reader.result;
-            this.upload(btoa(binaryString));
-        };
+        if (!foundWeather) {
+            return -1;
+        }
 
-        reader.readAsBinaryString(file);
-    }
+        return returnIndex;
+    };
 
-    public upload(base64String: string) {
-        fetch("https://danktrigger.azurewebsites.net/api/dank", {
-            method: "POST",
-            headers: {
-                "Content-Type": "text/plain"
-            },
-            body: JSON.stringify({
-                file: base64String
-            })
+    public deleteWeather = data => {
+        if (this.state.weatherData) {
+            const index = this.findIndex(data.name);
+
+            const newWeatherData = [
+                ...this.state.weatherData.slice(0, index),
+                ...this.state.weatherData.slice(index + 1)
+            ];
+
+            this.setState({
+                weatherData: newWeatherData
+            });
+
+            saveWeather(newWeatherData);
+        }
+    };
+
+    public callWeatherAPI = (cityName: string, callback: (data: any) => void) => {
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.REACT_APP_API_KEY}`, {
+            method: "GET"
         }).then((response: any) => {
-            if (!response.ok) {
-                this.setState({ results: response.statusText });
-            } else {
-                response.json().then((data: any) => this.setState({ results: data[0].class }));
-            }
+            response.json().then((data: any) => {
+                console.log(data);
+                if (data.cod !== 200) {
+                    this.setState({
+                        errorMessage: `[${cityName}] ${data.message}`,
+                        fetching: false
+                    });
+                    return;
+                }
+
+                callback(data);
+            });
+
             return response;
         });
-    }
+    };
+
+    public reloadWeather = (cityName: string) => {
+        this.callWeatherAPI(cityName, (data: any) => {
+            const weatherData = this.state.weatherData || [];
+            data.fetchedAt = new Date();
+            const index = this.findIndex(data.name);
+
+            const newWeatherData = [...weatherData.slice(0, index), data, ...weatherData.slice(index + 1)];
+
+            this.setState({
+                weatherData: newWeatherData,
+                fetching: false
+            });
+
+            saveWeather(newWeatherData);
+        });
+    };
+
+    public fetchWeather = (e: React.KeyboardEvent<HTMLInputElement>): React.KeyboardEvent<HTMLInputElement> => {
+        if (e.keyCode !== 13) {
+            return e;
+        }
+
+        const cityName = e.currentTarget.value;
+
+        if (this.existsWeather(cityName)) {
+            this.setState({
+                errorMessage: `${cityName} is already in the weather list`,
+                city: cityName,
+                fetching: false
+            });
+            return e;
+        }
+
+        this.setState({
+            errorMessage: undefined,
+            city: "",
+            fetching: true
+        });
+
+        this.callWeatherAPI(cityName, (data: any) => {
+            // console.log("현재온도 : " + (data.main.temp - 273.15));
+            // console.log("현재습도 : " + data.main.humidity);
+            // console.log("날씨 : " + data.weather[0].main);
+            // console.log("상세날씨설명 : " + data.weather[0].description);
+            // console.log("날씨 이미지 : " + data.weather[0].icon);
+            // console.log("바람   : " + data.wind.speed);
+            // console.log("나라   : " + data.sys.country);
+            // console.log("도시이름  : " + data.name);
+            // console.log("구름  : " + data.clouds.all + "%");
+
+            const weatherData = this.state.weatherData || [];
+            data.fetchedAt = new Date();
+
+            const newWeatherData = [data, ...weatherData];
+            this.setState({
+                weatherData: newWeatherData,
+                fetching: false
+            });
+
+            saveWeather(newWeatherData);
+        });
+
+        console.log(e.currentTarget.value);
+        return e;
+    };
+
+    public handleClose = () => {
+        // this.props.onClose(this.props.selectedValue);
+        console.log("handleClose");
+    };
+
+    public renderSpinner = () => {
+        return (
+            <Dialog
+                open={true}
+                onClose={this.handleClose}
+                classes={{
+                    root: "msa-dialog-spinner"
+                }}
+            >
+                <CircularProgress
+                    classes={{
+                        root: "bbbb"
+                    }}
+                    thickness={3}
+                    size={90}
+                    color="secondary"
+                />
+            </Dialog>
+        );
+    };
 
     public render() {
         return (
             <div className="container-fluid">
-                <ThemeContext.Provider value={this.state}>
-                    <ThemeContext.Consumer>
-                        {theme => (
-                            <div
-                                className="centreText"
-                                style={{ backgroundColor: theme.theme.background, color: theme.theme.foreground }}
-                            >
-                                <div className="dropZone">
-                                    <Dropzone onDrop={this.state.dropzone} style={{ position: "relative" }}>
-                                        <div style={{ height: "50vh" }}>
-                                            {this.state.imageFiles.length > 0 ? (
-                                                <div>
-                                                    {this.state.imageFiles.map(file => (
-                                                        <img className="image" key={file.name} src={file.preview} />
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <p>Try dropping some files here, or click to select files to upload.</p>
-                                            )}
-                                        </div>
-                                    </Dropzone>
-                                </div>
-                                <div className="dank">
-                                    {this.state.results === "" && this.state.imageFiles.length > 0 ? (
-                                        <CircularProgress thickness={3} />
-                                    ) : (
-                                        <p>{this.state.results}</p>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                    </ThemeContext.Consumer>
-
-                    <div>
-                        <Button onClick={this.toggleTheme}>Change Theme</Button>
-                    </div>
-                </ThemeContext.Provider>
+                {this.state.fetching && this.renderSpinner()}
+                <WeatherContext.Provider value={this.state}>
+                    <WithConsumerWeatherSearchError />
+                    <WithConsumerWeatherSearch />
+                    <WithConsumerWeatherList />
+                </WeatherContext.Provider>
             </div>
         );
     }

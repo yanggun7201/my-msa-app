@@ -1,22 +1,26 @@
 import * as React from "react";
 import { Alert } from "react-bootstrap";
-import { WeatherContext } from "../../context/weather-context";
 
-class WeatherSearchError extends React.Component<{}> {
+interface IProps {
+    errorMessage?: string;
+}
+
+class WeatherSearchError extends React.Component<IProps> {
+    constructor(props) {
+        super(props);
+    }
+
     public render() {
+        const { errorMessage } = this.props;
+
+        if (!errorMessage) {
+            return null;
+        }
+
         return (
-            <WeatherContext.Consumer>
-                {context =>
-                    context &&
-                    (context.errorMessage ? (
-                        <Alert bsStyle="danger">
-                            <strong>{context.errorMessage}</strong>
-                        </Alert>
-                    ) : (
-                        <React.Fragment />
-                    ))
-                }
-            </WeatherContext.Consumer>
+            <Alert bsStyle="danger">
+                <strong>{errorMessage}</strong>
+            </Alert>
         );
     }
 }

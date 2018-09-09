@@ -5,7 +5,7 @@ export interface IAppContextInterface {
     weatherData?: any[];
     city?: string;
     fetching?: boolean;
-    fetchWeather: any;
+    fetchWeather: (e: React.KeyboardEvent<HTMLInputElement>) => React.KeyboardEvent<HTMLInputElement>;
     deleteWeather: (data: any) => void;
     reloadWeather: (cityName: string) => void;
     registerWeatherForReload: (cityName: string, timeoutFunc: () => any) => void;
@@ -13,8 +13,8 @@ export interface IAppContextInterface {
 }
 
 export const WeatherContext = React.createContext<IAppContextInterface | null>({
-    fetchWeather: () => {
-        console.log("context default");
+    fetchWeather: (e: React.KeyboardEvent<HTMLInputElement>): React.KeyboardEvent<HTMLInputElement> => {
+        return e;
     },
     deleteWeather: data => {
         console.log("context default");

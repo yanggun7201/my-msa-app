@@ -1,7 +1,6 @@
 import * as React from "react";
 import { BrowserRouter, Redirect, Route } from "react-router-dom";
-// import App from "./App";
-import FirstComponent from "./components/FirstComponent";
+import App from "./App";
 import { Header } from "./components/Header";
 import "./css/styles.css";
 import "./css/weather-icons-wind.min.css";
@@ -13,7 +12,7 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
             <div>
                 <Header />
                 <main>
-                    <Route exact={true} path="/" component={FirstComponent} />
+                    <Route exact={true} path="/" component={App} />
                     <Redirect from="*" to="/" />
                 </main>
             </div>

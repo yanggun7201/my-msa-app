@@ -39,7 +39,7 @@ class WeatherItem extends React.Component<IProps, IState> {
 
         if (this.props.data) {
             if (this.props.data.fetchedAt !== newProps.data.fetchedAt) {
-                console.log("변경된 데이터", newProps);
+                console.log("Changed Props", newProps);
                 this.setState({
                     fetching: false
                 });

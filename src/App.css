@@ -236,6 +236,10 @@ header.msa-header {
     width: 2rem;
     height: 2rem;
 }
+.save-button svg:hover {
+    color: red;
+}
+
 .save-button.is-mobile svg {
     margin-left: 20px;
 }
