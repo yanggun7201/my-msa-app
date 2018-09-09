@@ -25,9 +25,85 @@ body {
     overflow-x: hidden;
 }
 
+.theme-title-area {
+    cursor: pointer;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.theme-title::first-letter {
+    text-transform: capitalize;
+}
+
+.theme-title {
+    width: 90%;
+    font-size: 1.5rem;
+}
+
+.theme-page-title {
+    font-size: 4rem;
+    text-align: center;
+}
+
 header.msa-header {
     background-color: #924da3 !important;
 }
+
+#theme-root.theme-purple header.msa-header {
+    background-color: #924da3 !important;
+}
+
+#theme-root.theme-blue header.msa-header {
+    background-color: #007bff !important;
+}
+
+#theme-root.theme-indigo header.msa-header {
+    background-color: #6610f2 !important;
+}
+
+#theme-root.theme-pink header.msa-header {
+    background-color: #e83e8c !important;
+}
+
+#theme-root.theme-red header.msa-header {
+    background-color: #dc3545 !important;
+}
+
+#theme-root.theme-orange header.msa-header {
+    background-color: #fd7e14 !important;
+}
+
+#theme-root.theme-green header.msa-header {
+    background-color: #28a745 !important;
+}
+
+#theme-root.theme-teal header.msa-header {
+    background-color: #20c997 !important;
+}
+
+#theme-root.theme-cyan header.msa-header {
+    background-color: #17a2b8 !important;
+}
+
+header.msa-header h1 {
+    font-size: 2rem;
+    padding-top: 0px;
+}
+
+header.msa-header h1 a {
+    box-sizing: border-box;
+}
+
+header.msa-header h1 .pipe {
+    font-size: 1.5rem;
+}
+
+/* header.msa-header h1 a::before {
+    content: " | ";
+}
+header.msa-header h1 a:first-of-type::before {
+    content: "";
+} */
 
 @media (max-width: 360px) {
     .card-columns .card {
@@ -52,6 +128,12 @@ header.msa-header {
     main .msa-input-label {
         font-size: 1.5rem;
     }
+
+    .theme-page-title {
+        font-size: 2rem;
+        text-align: center;
+        padding: 30px 0 10px 0;
+    }
 }
 
 @media (min-width: 360px) {
@@ -75,6 +157,12 @@ header.msa-header {
 
     main .msa-input-label {
         font-size: 1.5rem;
+    }
+
+    .theme-page-title {
+        font-size: 2.5rem;
+        text-align: center;
+        padding: 30px 0 10px 0;
     }
 }
 
@@ -110,6 +198,12 @@ header.msa-header {
 
     main .msa-input-label {
         font-size: 2rem;
+    }
+
+    .theme-page-title {
+        font-size: 4rem;
+        text-align: center;
+        padding: 30px 0 10px 0;
     }
 }
 
@@ -231,6 +325,42 @@ header.msa-header {
     color: #924da3;
 }
 
+#theme-root.theme-purple .card-header .card-header-right-side .save-button {
+    color: #924da3;
+}
+
+#theme-root.theme-blue .card-header .card-header-right-side .save-button {
+    color: #007bff;
+}
+
+#theme-root.theme-indigo .card-header .card-header-right-side .save-button {
+    color: #6610f2;
+}
+
+#theme-root.theme-pink .card-header .card-header-right-side .save-button {
+    color: #e83e8c !important;
+}
+
+#theme-root.theme-red .card-header .card-header-right-side .save-button {
+    color: #dc3545 !important;
+}
+
+#theme-root.theme-orange .card-header .card-header-right-side .save-button {
+    color: #fd7e14 !important;
+}
+
+#theme-root.theme-green .card-header .card-header-right-side .save-button {
+    color: #28a745 !important;
+}
+
+#theme-root.theme-teal .card-header .card-header-right-side .save-button {
+    color: #20c997 !important;
+}
+
+#theme-root.theme-cyan .card-header .card-header-right-side .save-button {
+    color: #17a2b8 !important;
+}
+
 .save-button svg {
     cursor: pointer;
     width: 2rem;
@@ -258,6 +388,42 @@ header.msa-header {
 .weather-icon .wi {
     font-size: 65px;
     color: #924da3;
+}
+
+#theme-root.theme-purple .weather-icon .wi {
+    color: #924da3;
+}
+
+#theme-root.theme-blue .weather-icon .wi {
+    color: #007bff;
+}
+
+#theme-root.theme-indigo .weather-icon .wi {
+    color: #6610f2;
+}
+
+#theme-root.theme-pink .weather-icon .wi {
+    color: #e83e8c !important;
+}
+
+#theme-root.theme-red .weather-icon .wi {
+    color: #dc3545 !important;
+}
+
+#theme-root.theme-orange .weather-icon .wi {
+    color: #fd7e14 !important;
+}
+
+#theme-root.theme-green .weather-icon .wi {
+    color: #28a745 !important;
+}
+
+#theme-root.theme-teal .weather-icon .wi {
+    color: #20c997 !important;
+}
+
+#theme-root.theme-cyan .weather-icon .wi {
+    color: #17a2b8 !important;
 }
 
 .card-footer .wi {

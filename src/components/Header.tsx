@@ -11,8 +11,14 @@ export const Header: React.StatelessComponent<{}> = () => {
                     <MenuIcon aria-haspopup="true" />
                 </IconButton>
                 <Typography variant="display2" color="inherit">
-                    <Link style={{ color: "white", fontSize: "2rem" }} to="/">
+                    <Link style={{ color: "white", fontSize: "1.5rem" }} to="/">
                         Weather
+                    </Link>
+                    &nbsp;
+                    <span className="pipe">|</span>
+                    &nbsp;
+                    <Link style={{ color: "white", fontSize: "1.5rem" }} to="/theme">
+                        Theme
                     </Link>
                 </Typography>
             </Toolbar>

@@ -1,12 +1,27 @@
-const STORAGE_KEY = "weatherData";
+const WEATHER_STORAGE_KEY = "weatherData";
+const THEME_STORAGE_KEY = "currentTheme";
+export const DEFAULT_THEME = "purple";
 
 export const loadWeather = (): any[] => {
-    const weatherDataFromStorage = localStorage.getItem(STORAGE_KEY);
+    const weatherDataFromStorage = localStorage.getItem(WEATHER_STORAGE_KEY);
     return weatherDataFromStorage ? JSON.parse(weatherDataFromStorage) : [];
 };
 
 export const saveWeather = (wheatherData: any[]) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(wheatherData));
+    localStorage.setItem(WEATHER_STORAGE_KEY, JSON.stringify(wheatherData));
+};
+
+export const loadTheme = (): string => {
+    const currentTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    if (!currentTheme) {
+        return DEFAULT_THEME;
+    }
+
+    return currentTheme;
+};
+
+export const saveTheme = (theme: string) => {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
 };
 
 export const isMobile = () => {
