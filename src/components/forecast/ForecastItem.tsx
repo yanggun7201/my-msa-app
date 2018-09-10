@@ -43,8 +43,8 @@ class ForecastItem extends React.Component<IProps> {
         return (
             <div className="card-body">
                 <div className="row mb-1 mt-1">
-                    <div className="col-7 weather-icon">{getWeatherIcon(data.weather[0].id)}</div>
-                    <div className="col-5 text-right-display-inherit">
+                    <div className="col-6 weather-icon">{getWeatherIcon(data.weather[0].id)}</div>
+                    <div className="col-6 text-right-display-inherit">
                         <div className="row">{this.renderTemporature(data)}</div>
                         <div className="row">{data.weather[0].main}</div>
                         <div className="row">

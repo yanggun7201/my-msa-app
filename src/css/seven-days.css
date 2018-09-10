@@ -13,6 +13,10 @@
         min-width: 30%;
         text-align: center;
     }
+
+    .weather-hourly-forecast .title {
+        font-size: 1.8rem !important;
+    }
 }
 
 .weather-forecast {
