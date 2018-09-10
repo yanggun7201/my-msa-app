@@ -1,7 +1,5 @@
-import { CircularProgress } from "@material-ui/core";
 import { Typography } from "@material-ui/core/";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
-import RotateRightIcon from "@material-ui/icons/RotateRight";
+import { ArrowBack } from "@material-ui/icons/";
 import classnames from "classnames";
 import dateformat from "dateformat";
 import * as React from "react";
@@ -10,64 +8,12 @@ import { getWeatherIcon, isMobile } from "../../utils/utils";
 
 interface IProps {
     data: any;
-    deleteWeather: (data: any) => void;
-    reloadWeather: (cityName: string) => void;
-    registerWeatherForReload: (cityName: string, timeoutFunc: () => any) => void;
-}
-interface IState {
-    fetching: boolean;
 }
 
-const RELOAD_MILLISECONDS =
-    (process.env.REACT_APP_RELOAD_MINUTES //
-        ? parseInt(process.env.REACT_APP_RELOAD_MINUTES, 10) //
-        : 10) * //
-    60 *
-    1000;
-
-class WeatherItem extends React.Component<IProps, IState> {
+class ForecastItem extends React.Component<IProps> {
     constructor(props) {
         super(props);
-        this.state = {
-            fetching: false
-        };
-
-        this.registerWeatherForReload();
     }
-
-    public componentWillReceiveProps = newProps => {
-        console.log("componentWillReceiveProps", newProps);
-
-        if (this.props.data) {
-            if (this.props.data.fetchedAt !== newProps.data.fetchedAt) {
-                console.log("Changed Props", newProps);
-                this.setState({
-                    fetching: false
-                });
-            }
-        }
-    };
-
-    public deleteWeather = () => {
-        this.props.deleteWeather(this.props.data);
-    };
-
-    public reloadWeather = () => {
-        this.setState({
-            fetching: true
-        });
-        this.props.reloadWeather(this.props.data.name);
-    };
-
-    public registerWeatherForReload = () => {
-        const { data } = this.props;
-        const timeoutFunc: any = setTimeout(() => {
-            console.log("setTimeout", new Date(), data.name);
-            this.reloadWeather();
-        }, RELOAD_MILLISECONDS);
-
-        this.props.registerWeatherForReload(data.name, timeoutFunc);
-    };
 
     public renderTemporature = data => {
         const temporature = data.main.temp - 273.15;
@@ -81,11 +27,11 @@ class WeatherItem extends React.Component<IProps, IState> {
                 <div className="card-header-right-side">
                     <div className={classnames("save-button", { "is-mobile": isMobile() })}>
                         <Typography variant="display2" color="inherit">
-                            <Link to={`/forecast/${data.name}`}>5 days</Link>
+                            <Link to="/">
+                                <ArrowBack />
+                                Weather List
+                            </Link>
                         </Typography>
-
-                        <RotateRightIcon onClick={this.reloadWeather} />
-                        <DeleteForeverIcon onClick={this.deleteWeather} />
                     </div>
                     <div className="fetched-time">fetched {dateformat(data.fetchedAt, "yyyy-mm-dd HH:MM:ss")}</div>
                 </div>
@@ -151,29 +97,17 @@ class WeatherItem extends React.Component<IProps, IState> {
         }
 
         const data = this.props.data;
-        const fetching = this.state.fetching;
 
         return (
             <div className="card border-dark mb-3">
-                {fetching ? (
-                    <CircularProgress
-                        classes={{
-                            root: "card-reload"
-                        }}
-                        thickness={3}
-                        size={90}
-                        color="secondary"
-                    />
-                ) : (
-                    <React.Fragment>
-                        {this.renderCardHeader(data)}
-                        {this.renderCardBody(data)}
-                        {this.renderCardFooter(data)}
-                    </React.Fragment>
-                )}
+                <React.Fragment>
+                    {this.renderCardHeader(data)}
+                    {this.renderCardBody(data)}
+                    {this.renderCardFooter(data)}
+                </React.Fragment>
             </div>
         );
     }
 }
 
-export default WeatherItem;
+export default ForecastItem;

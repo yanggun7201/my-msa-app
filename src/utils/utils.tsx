@@ -1,3 +1,5 @@
+import * as React from "react";
+import { weacherIcons } from "./weather-icons";
 const WEATHER_STORAGE_KEY = "weatherData";
 const THEME_STORAGE_KEY = "currentTheme";
 export const DEFAULT_THEME = "purple";
@@ -38,4 +40,16 @@ export const isMobile = () => {
     } else {
         return false;
     }
+};
+
+export const getWeatherIcon = code => {
+    const prefix = "wi wi-";
+    let icon = weacherIcons[code].icon;
+
+    if (!(code > 699 && code < 800) && !(code > 899 && code < 1000)) {
+        icon = "day-" + icon;
+    }
+    icon = prefix + icon;
+    // return <img src={`http://openweathermap.org/img/w/${icon}.png`} />;
+    return <i className={icon} />;
 };

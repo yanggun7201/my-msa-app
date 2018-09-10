@@ -1,0 +1,253 @@
+@media (min-width: 601px) {
+    .weather-forecast {
+        max-width: 900px;
+        margin: 10px auto;
+    }
+
+    .seven-day-fc .weather-icon {
+        text-align: center;
+        min-width: 17%;
+    }
+
+    .seven-day-fc .seven-day-others {
+        min-width: 30%;
+        text-align: center;
+    }
+}
+
+.weather-forecast {
+    padding: 17px;
+}
+
+#theme-root.theme-purple .seven-day-fc-header {
+    border-top: 1px solid #924da3;
+    border-right: 1px solid #924da3;
+    border-left: 1px solid #924da3;
+    background-color: #f8e8fc;
+}
+
+#theme-root.theme-blue .seven-day-fc-header {
+    border-top: 1px solid #007bff;
+    border-right: 1px solid #007bff;
+    border-left: 1px solid #007bff;
+    background-color: #d4e5f7;
+}
+
+#theme-root.theme-indigo .seven-day-fc-header {
+    border-top: 1px solid #6610f2;
+    border-right: 1px solid #6610f2;
+    border-left: 1px solid #6610f2;
+    background-color: #ddcbfa;
+}
+
+#theme-root.theme-pink .seven-day-fc-header {
+    border-top: 1px solid #e83e8c;
+    border-right: 1px solid #e83e8c;
+    border-left: 1px solid #e83e8c;
+    background-color: #f7c2db;
+}
+
+#theme-root.theme-red .seven-day-fc-header {
+    border-top: 1px solid #dc3545;
+    border-right: 1px solid #dc3545;
+    border-left: 1px solid #dc3545;
+    background-color: #f7c3c9;
+}
+
+#theme-root.theme-orange .seven-day-fc-header {
+    border-top: 1px solid #fd7e14;
+    border-right: 1px solid #fd7e14;
+    border-left: 1px solid #fd7e14;
+    background-color: #fcddc3;
+}
+
+#theme-root.theme-green .seven-day-fc-header {
+    border-top: 1px solid #28a745;
+    border-right: 1px solid #28a745;
+    border-left: 1px solid #28a745;
+    background-color: #d2f7db;
+}
+
+#theme-root.theme-teal .seven-day-fc-header {
+    border-top: 1px solid #20c997;
+    border-right: 1px solid #20c997;
+    border-left: 1px solid #20c997;
+    background-color: #d8faf0;
+}
+
+#theme-root.theme-cyan .seven-day-fc-header {
+    border-top: 1px solid #17a2b8;
+    border-right: 1px solid #17a2b8;
+    border-left: 1px solid #17a2b8;
+    background-color: #d3f4f9;
+}
+
+#theme-root.theme-purple .seven-day-fc {
+    border-top: 1px solid #924da3;
+}
+
+#theme-root.theme-blue .seven-day-fc {
+    border-top: 1px solid #007bff;
+}
+
+#theme-root.theme-indigo .seven-day-fc {
+    border-top: 1px solid #6610f2;
+}
+
+#theme-root.theme-pink .seven-day-fc {
+    border-top: 1px solid #e83e8c;
+}
+
+#theme-root.theme-red .seven-day-fc {
+    border-top: 1px solid #dc3545;
+}
+
+#theme-root.theme-orange .seven-day-fc {
+    border-top: 1px solid #fd7e14;
+}
+
+#theme-root.theme-green .seven-day-fc {
+    border-top: 1px solid #28a745;
+}
+
+#theme-root.theme-teal .seven-day-fc {
+    border-top: 1px solid #20c997;
+}
+
+#theme-root.theme-cyan .seven-day-fc {
+    border-top: 1px solid #17a2b8;
+}
+
+#theme-root.theme-purple .seven-day-fc:last-of-type {
+    border-bottom: 1px solid #924da3;
+}
+
+#theme-root.theme-blue .seven-day-fc:last-of-type {
+    border-bottom: 1px solid #007bff;
+}
+
+#theme-root.theme-indigo .seven-day-fc:last-of-type {
+    border-bottom: 1px solid #6610f2;
+}
+
+#theme-root.theme-pink .seven-day-fc:last-of-type {
+    border-bottom: 1px solid #e83e8c;
+}
+
+#theme-root.theme-red .seven-day-fc:last-of-type {
+    border-bottom: 1px solid #dc3545;
+}
+
+#theme-root.theme-orange .seven-day-fc:last-of-type {
+    border-bottom: 1px solid #fd7e14;
+}
+
+#theme-root.theme-green .seven-day-fc:last-of-type {
+    border-bottom: 1px solid #28a745;
+}
+
+#theme-root.theme-teal .seven-day-fc:last-of-type {
+    border-bottom: 1px solid #20c997;
+}
+
+#theme-root.theme-cyan .seven-day-fc:last-of-type {
+    border-bottom: 1px solid #17a2b8;
+}
+
+.seven-day-fc-header {
+    background-color: #eeeeee;
+    padding: 10px;
+    font-weight: bold;
+}
+
+/* @media (max-width: 600px) { */
+.seven-day-fc {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.seven-day-fc:last-of-type {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.seven-day-fc .date {
+    width: 25%;
+}
+
+.seven-day-fc .seven-day-temp {
+    width: 30%;
+}
+
+.seven-day-fc .pcount {
+    width: 16%;
+}
+/* } */
+
+/* Seven Day Forecast */
+
+.seven-day div {
+    vertical-align: middle;
+}
+
+.seven-day-fc {
+    /* margin: 0 -11px -1px -11px; */
+    padding: 10px;
+}
+
+.seven-day-fc div {
+    display: inline-block;
+}
+
+.seven-day-fc .date {
+    font-weight: bold;
+    color: #444;
+}
+
+.seven-day-fc .icon {
+    width: 50px;
+    height: 50px;
+}
+
+.seven-day-fc .seven-day-temp {
+    text-align: center;
+}
+
+.seven-day-fc .temp-high {
+    color: #444;
+}
+
+.seven-day-fc .sky-condition {
+    color: #444;
+    font-style: italic;
+}
+
+.seven-day-fc .temp-low,
+.seven-day-fc .sky-condition {
+    display: block;
+}
+
+.seven-day-fc .pcount {
+    text-align: center;
+}
+
+.seven-day-fc .seven-day-temp div {
+    display: block;
+}
+
+.seven-day-fc .seven-day-others div {
+    display: block;
+}
+
+.seven-day-fc .weather-icon {
+    min-width: 46px;
+}
+.seven-day-fc .weather-icon .wi {
+    font-size: 32px;
+}
+
+.weather-hourly-forecast {
+    padding-top: 20px;
+}
+
+.weather-hourly-forecast .title {
+    font-size: 1rem;
+}

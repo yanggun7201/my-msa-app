@@ -1,3 +1,5 @@
+@import "./css/seven-days.css";
+
 main label + .msa-input {
     margin-top: 2rem;
 }
@@ -47,6 +49,42 @@ body {
 
 header.msa-header {
     background-color: #924da3 !important;
+}
+
+#theme-root.theme-purple .card {
+    border-color: #924da3 !important;
+}
+
+#theme-root.theme-blue .card {
+    border-color: #007bff !important;
+}
+
+#theme-root.theme-indigo .card {
+    border-color: #6610f2 !important;
+}
+
+#theme-root.theme-pink .card {
+    border-color: #e83e8c !important;
+}
+
+#theme-root.theme-red .card {
+    border-color: #dc3545 !important;
+}
+
+#theme-root.theme-orange .card {
+    border-color: #fd7e14 !important;
+}
+
+#theme-root.theme-green .card {
+    border-color: #28a745 !important;
+}
+
+#theme-root.theme-teal .card {
+    border-color: #20c997 !important;
+}
+
+#theme-root.theme-cyan .card {
+    border-color: #17a2b8 !important;
 }
 
 #theme-root.theme-purple header.msa-header {
@@ -323,6 +361,7 @@ header.msa-header h1 a:first-of-type::before {
     font-size: 0.5rem;
     text-align: right;
     color: #924da3;
+    top: -2px;
 }
 
 #theme-root.theme-purple .card-header .card-header-right-side .save-button {
@@ -361,17 +400,43 @@ header.msa-header h1 a:first-of-type::before {
     color: #17a2b8 !important;
 }
 
+.save-button h1 {
+    color: inherit;
+    font-size: inherit;
+    display: inline;
+}
+
+.save-button h1 a {
+    color: inherit;
+    font-size: 1.2rem;
+    padding-right: 10px;
+    position: relative;
+    top: 2px;
+}
+
+.save-button.is-mobile h1 a {
+    color: inherit;
+    font-size: 1.2rem;
+    padding-right: 0px;
+    position: relative;
+    top: 2px;
+}
+
 .save-button svg {
     cursor: pointer;
     width: 2rem;
     height: 2rem;
+    margin-left: 0px;
 }
 .save-button svg:hover {
     color: red;
 }
+.save-button a:hover {
+    color: red;
+}
 
 .save-button.is-mobile svg {
-    margin-left: 20px;
+    margin-left: 13px;
 }
 
 .card-header .card-header-right-side .fetched-time {
@@ -438,6 +503,13 @@ header.msa-header h1 a:first-of-type::before {
 
 .card .card-reload {
     margin: 10vh auto;
+}
+.weather-forecast .card-reload {
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    left: calc(50vw - 45px);
+    top: calc(50vh - 45px);
 }
 
 .text-right-display-inherit div {
