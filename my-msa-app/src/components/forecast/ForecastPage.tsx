@@ -47,9 +47,12 @@ class ForecastPage extends React.Component<IProps, IState> {
         const forecastWeathers = list.map(data => {
             const newData: any = {};
 
-            const splittedDate = data.dt_txt.split(" ");
-            newData.date = dateformat(new Date(splittedDate[0]), "ddd, mmm dS, yyyy");
-            newData.time = splittedDate[1].substr(0, 5);
+            const dtTxtDate = new Date(data.dt_txt);
+            const TIME_GAP = 12 * 60 * 60 * 1000;
+            const newZealandDate = new Date(dtTxtDate.getTime() - TIME_GAP);
+
+            newData.date = dateformat(newZealandDate, "ddd, mmm dS, yyyy");
+            newData.time = dateformat(newZealandDate, "HH:MM");
 
             newData.dt_txt = data.dt_txt;
             newData.temp = (data.main.temp - 273.15).toFixed(1);
