@@ -52,9 +52,9 @@ class ForecastPage extends React.Component<IProps, IState> {
             newData.time = splittedDate[1].substr(0, 5);
 
             newData.dt_txt = data.dt_txt;
-            newData.temp = (data.main.temp - 273.15).toFixed(0);
-            newData.temp_min = (data.main.temp_min - 273.15).toFixed(0);
-            newData.temp_max = (data.main.temp_max - 273.15).toFixed(0);
+            newData.temp = (data.main.temp - 273.15).toFixed(1);
+            newData.temp_min = (data.main.temp_min - 273.15).toFixed(1);
+            newData.temp_max = (data.main.temp_max - 273.15).toFixed(1);
             newData.humidity = data.main.humidity;
             newData.code = data.weather[0].id;
             newData.weather = data.weather[0].main;

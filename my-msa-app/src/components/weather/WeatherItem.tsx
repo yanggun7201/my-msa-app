@@ -71,7 +71,7 @@ class WeatherItem extends React.Component<IProps, IState> {
 
     public renderTemporature = data => {
         const temporature = data.main.temp - 273.15;
-        return temporature.toFixed(0) + " °C";
+        return temporature.toFixed(1) + " °C";
     };
 
     public renderCardHeader = data => {
